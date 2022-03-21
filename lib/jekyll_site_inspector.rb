@@ -2,7 +2,7 @@
 
 require "jekyll"
 require "jekyll_plugin_logger"
-require_relative "jekyll_plugin_logger/version"
+require_relative "jekyll_site_inspector/version"
 
 module Jekyll
   PLUGIN_NAME = "site_inspector"
@@ -42,5 +42,5 @@ module Jekyll
     end
   end
 
-  info { "Loaded #{PLUGIN_NAME} v#{JekyllSiteInspector.VERSION} plugin." }
+  info { "Loaded #{PLUGIN_NAME} v#{JekyllSiteInspector::VERSION} plugin." }
 end
