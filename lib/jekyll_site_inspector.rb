@@ -4,9 +4,11 @@ require "jekyll"
 require "jekyll_plugin_logger"
 require_relative "jekyll_site_inspector/version"
 
-module Jekyll
+module JekyllPluginNameSiteInspector
   PLUGIN_NAME = "site_inspector"
+end
 
+module Jekyll
   class SiteInspector < Jekyll::Generator
     # Displays information about the Jekyll site
     # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
@@ -41,6 +43,6 @@ module Jekyll
       site.tags.sort.each { |key, value| info { "site.tags.#{key} = '#{value}'" } }
     end
   end
-
-  info { "Loaded #{PLUGIN_NAME} v#{JekyllSiteInspector::VERSION} plugin." }
 end
+
+Jekyll.info { "Loaded #{JekyllPluginNameSiteInspector::PLUGIN_NAME} v#{JekyllSiteInspector::VERSION} plugin." }
