@@ -2,43 +2,45 @@
 
 require "jekyll"
 require "jekyll_plugin_logger"
+require_relative "jekyll_plugin_logger/version"
 
 module Jekyll
   PLUGIN_NAME = "site_inspector"
 
-  class ContextInspector < Liquid::Tag
-    def render(context)
-      site = context.registers[:site]
-      inspector_enabled = site.config["site_inspector"]
-      return if inspector_enabled.nil? || !inspector_enabled
-
+  class SiteInspector < Jekyll::Generator
+    # Displays information about the Jekyll site
+    # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
+    # @return [void]
+    def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
       mode = site.config["env"]["JEKYLL_ENV"]
-      return unless inspector_enabled == "force" || mode == "development"
 
-      dump_info(context)
-    end
+      config = site.config["site_inspector"]
+      return if config.nil?
 
-    private
+      inspector_enabled = config != false
+      return unless inspector_enabled
 
-    def dump_info(context)
-      page = context.registers[:page]
-      info do
-        key_value_pairs = context.registers.map do |key, value|
-          "  <code>#{key}</code> has a value with type <code>#{value.class}</code>"
-        end
-        vars = page.keys.sort.join("</code>, <code>")
-        <<~END_MESSAGE
-          context for #{page.path} is of type #{context.class}.
-          context.registers for #{page.path} contains the following key/value pairs:
-          #{key_value_pairs.join("\n")}
-          #{PLUGIN_NAME}: #{page.path} contains the following key/value pairs:
-          <p class='info'>Jekyll variables for this page are:
-          <code>#{vars}</code></p>
-        END_MESSAGE
+      force = config == "force"
+      return unless force || mode == "development"
+
+      info { "site is of type #{site.class}" }
+      info { "site.time = #{site.time}" }
+      info { "site.config['env']['JEKYLL_ENV'] = #{mode}" }
+      site.collections.each do |key, _|
+        info { "site.collections.#{key}" }
       end
+
+      # key env contains all environment variables, quite verbose so output is suppressed
+      site.config.sort.each { |key, value| info { "site.config.#{key} = '#{value}'" unless key == "env" } }
+
+      site.data.sort.each { |key, value| info { "site.data.#{key} = '#{value}'" } }
+      # site.documents.each {|key, value| @log.info "site.documents.#{key}" } # Generates too much output!
+      info { "site.keep_files: #{site.keep_files.sort}" }
+      # site.pages.each {|key, value| @log.info "site.pages.#{key}"" } # Generates too much output!
+      # site.posts.each {|key, value| @log.info "site.posts.#{key}" }  # Generates too much output!
+      site.tags.sort.each { |key, value| info { "site.tags.#{key} = '#{value}'" } }
     end
   end
 
-  Liquid::Template.register_tag(PLUGIN_NAME, ContextInspector)
-  info { "Loaded #{PLUGIN_NAME} plugin." }
+  info { "Loaded #{PLUGIN_NAME} v#{JekyllSiteInspector.VERSION} plugin." }
 end
