@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "jekyll"
+require "jekyll_plugin_logger"
 require_relative "jekyll_site_inspector/version"
 
 module JekyllPluginNameSiteInspector
