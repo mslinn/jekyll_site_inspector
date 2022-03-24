@@ -14,6 +14,8 @@ module Jekyll
     # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
     # @return [void]
     def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+      @logger = PluginLogger.new(self)
+
       mode = site.config["env"]["JEKYLL_ENV"]
 
       config = site.config["site_inspector"]
@@ -25,22 +27,22 @@ module Jekyll
       force = config == "force"
       return unless force || mode == "development"
 
-      info { "site is of type #{site.class}" }
-      info { "site.time = #{site.time}" }
-      info { "site.config['env']['JEKYLL_ENV'] = #{mode}" }
+      @logger.info { "site is of type #{site.class}" }
+      @logger.info { "site.time = #{site.time}" }
+      @logger.info { "site.config['env']['JEKYLL_ENV'] = #{mode}" }
       site.collections.each do |key, _|
-        info { "site.collections.#{key}" }
+        @logger.info { "site.collections.#{key}" }
       end
 
       # key env contains all environment variables, quite verbose so output is suppressed
-      site.config.sort.each { |key, value| info { "site.config.#{key} = '#{value}'" unless key == "env" } }
+      site.config.sort.each { |key, value| @logger.info { "site.config.#{key} = '#{value}'" unless key == "env" } }
 
-      site.data.sort.each { |key, value| info { "site.data.#{key} = '#{value}'" } }
+      site.data.sort.each { |key, value| @logger.info { "site.data.#{key} = '#{value}'" } }
       # site.documents.each {|key, value| @log.info "site.documents.#{key}" } # Generates too much output!
-      info { "site.keep_files: #{site.keep_files.sort}" }
+      @logger.info { "site.keep_files: #{site.keep_files.sort}" }
       # site.pages.each {|key, value| @log.info "site.pages.#{key}"" } # Generates too much output!
       # site.posts.each {|key, value| @log.info "site.posts.#{key}" }  # Generates too much output!
-      site.tags.sort.each { |key, value| info { "site.tags.#{key} = '#{value}'" } }
+      site.tags.sort.each { |key, value| @logger.info { "site.tags.#{key} = '#{value}'" } }
     end
   end
 end
