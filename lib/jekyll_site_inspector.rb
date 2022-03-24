@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "jekyll"
-require "jekyll_plugin_logger"
 require_relative "jekyll_site_inspector/version"
 
 module JekyllPluginNameSiteInspector
@@ -14,7 +13,7 @@ module Jekyll
     # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
     # @return [void]
     def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-      @logger = PluginLogger.new(self)
+      @logger = PluginMetaLogger.new_logger(self)
 
       mode = site.config["env"]["JEKYLL_ENV"]
 
