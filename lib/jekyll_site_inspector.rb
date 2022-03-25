@@ -14,7 +14,7 @@ module Jekyll
     # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
     # @return [void]
     def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-      @logger = PluginMetaLogger.new_logger(self)
+      @logger = PluginMetaLogger.instance.new_logger(self)
 
       mode = site.config["env"]["JEKYLL_ENV"]
 
@@ -47,4 +47,4 @@ module Jekyll
   end
 end
 
-Jekyll.info { "Loaded #{JekyllPluginNameSiteInspector::PLUGIN_NAME} v#{JekyllSiteInspector::VERSION} plugin." }
+PluginMetaLogger.instance.info { "Loaded #{JekyllPluginNameSiteInspector::PLUGIN_NAME} v#{JekyllSiteInspector::VERSION} plugin." }
