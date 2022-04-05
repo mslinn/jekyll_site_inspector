@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.6.0"
   spec.summary = "Provides a Jekyll tag plugin that displays lots of information from context for websites in development mode."
   spec.test_files = spec.files.grep(%r!^(test|spec|features)/!)
-  spec.version = JekyllSiteInspector::VERSION
+  spec.version = JekyllSiteInspectorVersion::VERSION
 
   spec.add_dependency "jekyll", ">= 3.5.0"
   spec.add_dependency "jekyll_plugin_logger"
