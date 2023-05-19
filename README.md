@@ -30,11 +30,7 @@ end
 
 And then execute:
 
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install jekyll_site_inspector
+    $ bundle 
 
 
 ## Development
@@ -46,11 +42,6 @@ You can also run `bin/console` for an interactive prompt that will allow you to 
 
 ### Build and Install Locally
 To build and install this gem onto your local machine, run:
-```shell
-$ rake install:local
-```
-
-The following also does the same thing:
 ```shell
 $ bundle exec rake install
 jekyll_site_inspector 1.0.0 built to pkg/jekyll_site_inspector-0.1.0.gem.
