@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.description = 'Provides a Jekyll tag plugin that displays lots of information from context for websites in development mode.'
   spec.email = ['mslinn@mslinn.com']
   spec.files = Dir['.rubocop.yml', 'LICENSE.*', 'Rakefile', '{lib,spec}/**/*', '*.gemspec', '*.md']
-  spec.homepage = 'https://www.mslinn.com/jekyll/3000-jekyll-plugins.html#site_inspector'
+  spec.homepage = 'https://www.mslinn.com/jekyll_plugins/jekyll_site_inspector.html'
   spec.license = 'MIT'
   spec.metadata = {
     'allowed_push_host' => 'https://rubygems.org',
