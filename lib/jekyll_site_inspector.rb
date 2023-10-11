@@ -11,7 +11,7 @@ module Jekyll
     # Displays information about the Jekyll site
     # @param site [Jekyll.Site] Automatically provided by Jekyll plugin mechanism
     # @return [void]
-    def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+    def generate(site) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity
       @logger = PluginMetaLogger.instance.new_logger(self, PluginMetaLogger.instance.config)
 
       mode = site.config['env']['JEKYLL_ENV']
